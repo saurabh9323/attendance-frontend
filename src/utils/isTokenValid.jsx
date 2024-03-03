@@ -1,22 +1,4 @@
-// import decodeJWT from "./decodejwt";
-
-// // Helper function to check if the token is valid
-// const isTokenValid = () => {
-//   const token = localStorage.getItem("token");
-//   if (token) {
-//     const decoded = decodeJWT(token); // Use decodeJWT function
-//     const currentTime = Date.now() / 1000;
-//     return decoded.exp > currentTime;
-//   }
-//   return false;
-// };
-
-// export default isTokenValid;
-
-// Check if token is valid
-// Get token from cookies
 const getTokenFromCookies = () => {
-  console.log(document.cookie);
   return document.cookie
     .split(";")
     .find((cookie) => cookie.trim().startsWith("authToken="));

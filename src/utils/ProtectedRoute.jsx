@@ -4,7 +4,6 @@ import isTokenValid from "./isTokenValid";
 
 // ProtectedRoute component to handle protected routes
 const ProtectedRoute = ({ path, element }) => {
-  console.log(isTokenValid());
   return isTokenValid() ? (
     element
   ) : (

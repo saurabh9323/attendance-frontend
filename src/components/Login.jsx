@@ -30,15 +30,18 @@ function Login() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/login", {
-        username,
-        password,
-      });
-      console.log("Response from backend:", response.data);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/login`,
+        {
+          username,
+          password,
+        }
+      );
+
       localStorage.setItem("token", response.data.token);
       document.cookie = `authToken=${response.data.token}; path=/;`;
       const userRole = response.data.role;
-      console.log("User role:", userRole);
+
       if (userRole === "admin") {
         navigate("/admin-report");
       } else {

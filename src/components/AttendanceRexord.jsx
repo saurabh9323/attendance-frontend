@@ -21,12 +21,11 @@ function AttendanceReport() {
       if (token) {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/admin/report/${username}`,
+            `${import.meta.env.VITE_API_URL}/api/admin/report/${username}`,
             {
               withCredentials: true,
             }
           );
-          console.log(response.data);
 
           if (
             Array.isArray(response.data.attendance) &&
@@ -36,7 +35,7 @@ function AttendanceReport() {
               ...response.data.attendance,
               ...response.data.absentDays,
             ];
-            console.log("combine -----", combinedData);
+
             const sortedData = combinedData
               .filter((item) => typeof item === "object")
               .sort((a, b) => {
@@ -50,8 +49,6 @@ function AttendanceReport() {
                 ).toMillis();
                 return dateA - dateB;
               });
-
-            console.log("sorted date -", sortedData);
 
             setAttendanceData(sortedData);
             setTotalPages(Math.ceil(sortedData.length / pageSize));

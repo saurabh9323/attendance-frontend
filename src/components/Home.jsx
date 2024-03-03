@@ -27,9 +27,12 @@ function Home() {
     setIsSignedIn(isSignedInStorage);
     if (token && isSignedInStorage) {
       try {
-        const response = await axios.get("http://localhost:5000/api/signin", {
-          headers: { Authorization: token },
-        });
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/signin`,
+          {
+            headers: { Authorization: token },
+          }
+        );
         if (response.data.signInTime) {
           setSignInTime(response.data.signInTime);
           if (response.data.signOutTime) {
@@ -48,7 +51,7 @@ function Home() {
       try {
         setLoading(true);
         const response = await axios.post(
-          "http://localhost:5000/api/signin",
+          `${import.meta.env.VITE_API_URL}/api/signin`,
           null,
           { withCredentials: true }
         );
@@ -69,7 +72,7 @@ function Home() {
     if (token) {
       try {
         setLoading(true);
-        await axios.post("http://localhost:5000/api/signout", null, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/signout`, null, {
           withCredentials: true,
         });
         setSignOutTime(DateTime.now().toFormat("hh:mm:ss a"));
@@ -84,20 +87,19 @@ function Home() {
     }
   };
 
-const handleLogout = () => {
-  // Remove token from local storage
-  localStorage.removeItem("token");
-  localStorage.removeItem("isSignedIn");
-  setIsSignedIn(false);
+  const handleLogout = () => {
+    // Remove token from local storage
+    localStorage.removeItem("token");
+    localStorage.removeItem("isSignedIn");
+    setIsSignedIn(false);
 
-  // Clear authToken cookie
-  document.cookie =
-    "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    // Clear authToken cookie
+    document.cookie =
+      "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-  // Redirect to home page
-  navigate("/");
-};
-
+    // Redirect to home page
+    navigate("/");
+  };
 
   const [currentTime, setCurrentTime] = useState("");
   const [currentDate, setCurrentDate] = useState("");
